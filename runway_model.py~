@@ -1,0 +1,19 @@
+## Sample code to generate an image using the 
+## pre-trained PGAN celebAHQ-512 checkpoint from the Pytorch Hub
+
+import torch
+import runway
+import numpy as np
+use_gpu = True if torch.cuda.is_available() else False
+
+# Load the model from the Pytorch Hub
+model = torch.hub.load('facebookresearch/pytorch_GAN_zoo:hub',
+                       'PGAN', model_name='celebAHQ-512',
+                       pretrained=True, useGPU=use_gpu)
+
+# Generate one image
+noise, _ = model.buildNoiseData(1)
+with torch.no_grad():
+    generated_image = model.test(noise)
+    
+# Now generated_image contains our generated image! 🌞
